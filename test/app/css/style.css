@@ -1,0 +1,9 @@
+body{
+  overflow-x:hiden;
+}
+
+tr > td{
+  padding-bottom: 2px;
+  padding-top: 2px;
+  cursor: pointer;
+}

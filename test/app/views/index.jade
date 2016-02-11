@@ -1,0 +1,71 @@
+extends layout
+block content
+  .ui.grid.stackable(style="margin: 5px;")
+    .ten.wide.computer.ten.wide.tablet.sixteen.mobile.column
+      .sticky
+        .row(style="margin-top: 4px; margin-bottom: 4px;")
+          .column
+            .ui.fluid.action.input
+              //.loading error
+              input(ng-model="imputFiltro" placeholder='Búscar...', type='search')
+              .ui.button.primary.icon
+                i.search.icon
+      .row(style="margin-top: 4px; margin-bottom: 4px;")
+        .column.center.aligned
+          table.ui.very.basic.celled.table.selectable
+            thead
+              tr
+                th Artitulo
+                th.collapsing Disponible
+                th.collapsing Precio
+                th.collapsing Agregar
+            tbody
+              //track by $index
+              tr(ng-repeat="art in artculos | filter:imputFiltro as results" ng-click='artSelect($index)')
+                td
+                  h4.ui.image.header
+                    img.ui.mini.rounded.image( src='{{art.img}}')
+                    .content
+                      | {{art.etiqueta}} 
+                      .sub.header {{art.detalles}} 
+                  td.center.aligned {{art.disponible}}
+                  td.center.aligned {{art.precio | currency : "$" : 2}}
+                  td.center.aligned(style="padding-left: 0px;")
+                    .ui.input.fluid
+                      input(style="padding: 3px; padding-left: 4px; padding-right: 4px;" type='text' ng-model="art.agregar")
+              tr(ng-if="results.length == 0")
+                td No hay resultados
+                                
+    .six.wide.computer.six.wide.tablet.sixteen.mobile.column
+      .column.center.aligned.ui.segment Content
+        table.ui.very.basic.celled.table.selectable
+          thead
+            tr
+              th Artitulo
+              th.collapsing Precio
+          tbody
+            //track by $index
+            tr(ng-repeat="art in artculos" ng-click='artSelect($index)')
+              td
+                h4.ui.header
+                  .content
+                    | {{art.etiqueta}} 
+                    .sub.header {{art.detalles}} 
+                td.center.aligned {{art.precio | currency : "$" : 2}}
+        button.fluid.ui.button Limpiar compra
+        button.primary.fluid.ui.button Comprar {{ 23.3 | currency : "$" : 2}}
+  
+  script(type='text/javascript').
+    /*var alertOnlineStatus = function() {
+      window.alert(navigator.onLine ? 'online' : 'offline');
+    };
+    window.addEventListener('online',  alertOnlineStatus);
+    window.addEventListener('offline',  alertOnlineStatus);
+    alertOnlineStatus();
+    */
+    var updateOnlineStatus = function() {
+      ipcRenderer.send('console', navigator.onLine ? 'online' : 'offline');
+    };
+    window.addEventListener('online',  updateOnlineStatus);
+    window.addEventListener('offline',  updateOnlineStatus);
+    updateOnlineStatus();

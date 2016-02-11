@@ -1,0 +1,26 @@
+{
+  "name": "test",
+  "version": "0.0.1",
+  "main": "main.js",
+  "description": "Aplicacion de escritorio para test",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "postinstall": "grunt help",
+    "start": "electron .",
+    "test": "mocha ./tests/test.js",
+    "clean": "rm -rf ./dist",
+    "clean:osx": "rm -rf ./dist/osx",
+    "clean:win": "rm -rf ./dist/win",
+    "pack": "",
+    "bulid": ""
+  },
+  "author": "Marani Matias Ezequiel",
+  "email": "",
+  "engines": {
+    "node": "~5.3.0",
+    "npm": "~3.3.12"
+  },
+  "dependencies": {
+  }
+}

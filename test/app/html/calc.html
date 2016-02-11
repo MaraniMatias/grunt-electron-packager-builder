@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="es" ng-app="POSMercadear"><head><meta charset="UTF-8"><meta name="viewport" content="initial-scale=1, maximum-scale=1"><title></title><!-- for Google--><meta name="description" content=""><meta name="keywords" content=""><meta name="author" content=""><meta name="copyright" content=""><meta name="application-name" content=""><!-- for Facebook--><meta property="og:title" content=""><meta property="og:type" content="article"><meta property="og:image" content=""><meta property="og:url" content=""><meta property="og:description" content=""><!-- for Twitter--><meta name="twitter:card" content="summary"><meta name="twitter:title" content=""><meta name="twitter:description" content=""><meta name="twitter:image" content=""><link rel="stylesheet" href="../bower_components/semantic/semantic.min.css"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/fonts.css"><!--script(src='/socket.io/socket.io.js')--><!--script(src='/components/angular-resource/angular-resource.js')--><!--script(src='/components/angular-cookies/angular-cookies.js')--><!--script(src='/components/angular-sanitize/angular-sanitize.js')--><!--script(src='/components/angular-animate/angular-animate.js')--><!--script(src='/components/angular-touch/angular-touch.js')--><!--script(src='/components/angular-route/angular-route.js')--><!--script(src='/components/angular-toggle-switch/angular-toggle-switch.js')--><script src="../bower_components/jquery/jquery.min.js"></script><script src="../bower_components/angular/angular.min.js"></script><script src="../bower_components/semantic/semantic.min.js"></script><script src="../bower_components/pusher/pusher.js"></script><script src="../js/index.js"></script></head><body ng-controller="main"><!--.ui.dimmer(ng-class='loading')--><style type="text/css">.ui.grid > .row {
+  padding: 0em;
+  margin: 1em;
+}     </style><div ng-controller="TodoListController as todoList"><h1>{{todoList.todos.length}}</h1><div class="ui grid right aligned"><div ng-repeat="todo in todoList.todos" class="row"><div class="column"><div class="ui statistic small"><div class="label">{{todo.text}}</div><div class="value">{{todo.value}}</div></div></div></div><div class="row"><div class="column"><form ng-submit="todoList.addTodo()"><div ng-class="error" class="ui fluid input action"><input type="text" ng-model="todoList.todoText"><button type="submit" class="ui secondary button">=</button><div ng-click="todoList.todoText=''" class="ui secondary button">Borrar</div></div></form></div></div><div class="row"><div class="column"><div class="ui four buttons"><button ng-click="todoList.action('+')" class="ui fluid secondary button">+</button><button ng-click="todoList.action('-')" class="ui fluid secondary button">-</button><button ng-click="todoList.action('*')" class="ui fluid secondary button">*</button><button ng-click="todoList.action('/')" class="ui fluid secondary button">/ </button></div></div></div></div></div><script type="text/javascript">app.controller('TodoListController',['addMessage','$http','$scope',
+function(addMessage,$http,$scope){ 
+  var todoList = this;
+  todoList.todos = [
+    {text:'((12+1*2)-10)/2 ', value:2},
+  ];
+  
+  todoList.todoText = 0;
+  $scope.$watch('todoList.todoText', function() {
+    console.log(parseInt(todoList.todoText));
+    $scope.error=todoList.todoText.search(/[^0-9]/)>=0?"error":"";
+  }, true);
+  
+  todoList.action = function(operando) {
+      switch (operando) {
+      case '-':
+        todoList.oprador1=todoList.todoText;
+        todoList.todoText="";
+      break;
+      case '+':
+
+      break;
+      case '/':
+
+      break;
+      case '*':
+
+      break;
+      default:
+        $scope.error='error';
+      break;
+      }
+    todoList.todos.push({text:todoList.todoText, value:4});
+    todoList.todoText = '';
+  };
+  
+  todoList.addTodo = function() {
+    todoList.todos.push({text:todoList.todoText, value:4});
+    todoList.todoText = '';
+  };
+
+  todoList.archive = function() {
+    var oldTodos = todoList.todos;
+    todoList.todos = [];
+    angular.forEach(oldTodos, function(todo) {
+      if (!todo.done) todoList.todos.push(todo);
+    });
+  };
+}]);</script></body></html>

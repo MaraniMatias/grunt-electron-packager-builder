@@ -1,0 +1,23 @@
+extends layout
+block content
+  .ui.very.relaxed.grid.container(style='padding: 0.9rem;')
+    .column.center.aligned
+      form#loginForm(name="loginForm",method="post",action="")
+        .ui.form.stacked.segment.blue
+          .field
+            label Username
+            .ui.left.icon.input
+              input#inputEmail( name='email' , placeholder='Email address', required='', value='play@one.com',autofocus='', type='email')
+              i.user.icon
+          .field
+            label Password
+            .ui.left.icon.input
+              input#inputPassword(name='password',placeholder='Password', required='',value='123456', type='password')
+              i.lock.icon
+          button.ui.blue.submit.button(type='submit') Login
+          button.ui.google.plus.button
+            i.google.plus.icon
+            |  Google Plus
+      .ui.message
+        p la la la
+        
