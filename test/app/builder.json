@@ -1,6 +1,6 @@
 {
   "osx" : {
-    "title": "Builder Config osx Example",
+    "title": "CNC-ino",
     "background": "./recursos/installer.png",
     "icon": "./recursos/icon.icns",    
     "icon-size": 80,
@@ -10,7 +10,7 @@
     ]
   },
   "win" : {
-    "title" : "Builder Config Windows Example",
+    "title" : "CNC-ino",
     "icon" : "./test/app/recursos/icon.ico",
     "version" : "0.1.2",
     "publisher": "Publisher Info"
@@ -20,7 +20,7 @@
     "version" : "0.1.2",
     "icon" : "./recursos/icon.ico",
     "version" : "0.1.2",
-    "title" : "Builder Config Linux Example",
+    "title" : "CNC-ino",
     "comment" : "This is a comment",
     "executable" : "electron-builder-example",
     "maintainer": "Dummy Maintainer <dummy@maintainer.org>"
