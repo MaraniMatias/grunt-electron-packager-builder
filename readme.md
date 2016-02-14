@@ -57,7 +57,7 @@ module.exports = (grunt) => {
         //arch      :  'all', // default all // ia32, am64, all
         //appPath   :  './app', // default ./app
         //basePath  :  './app', // default ./app // Path base for the file config.json 
-        config    :   './task-builder-config.json', // default ./app/builder.json
+        config    :   './app-builder.json', // default ./app/builder.json
         buildPath   :  './build', // default ./build
         out       :  './build/instaler'  // default ./dist
       },
@@ -104,7 +104,7 @@ module.exports = (grunt) => {
   grunt.registerTask('default', ['eplus:run']);
 };
 ```
-### builder.json
+### app-builder.json
 ```json
 {
   "app": {
@@ -160,7 +160,7 @@ tree -L 2 -a
 ├── Gruntfile.js
 ├── package.json
 ├── README.md
-├── task-builder-config.json
+├── app-builder.json
 ...
 ```
 
