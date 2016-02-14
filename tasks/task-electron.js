@@ -24,30 +24,24 @@ module.exports = function (grunt) {
       options.config['linux'].arch  = (options.arch ==='ia32') ? 32:64;
       options.config['win'].arch  = (options.arch ==='ia32') ? 32:64;
       options.config['osx'].arch  = (options.arch ==='ia32') ? 32:64;
-      //console.log(options);
-      
-      fs.access( options.appPath , function (err) {
-        if (err) { grunt.warn(err); return; }
-        if( pla!=='osx' || ( pla==='osx' && os.platform() ==='darwin') ){
-          builder.build( options , function (err) {
-            if (err) {
-              grunt.warn(err);
-              return;
-            }
-            fs.rename(
-              path.resolve(options.out+'/'+options.config['win'].title+' Setup.exe'),
-              path.resolve(options.out+'/'+options.config['win'].title+'-'+options.config['win'].arch+'-Setup.exe')
-              ,function (err) {
-                if (err) {
-                  grunt.warn(err);
-                  return;
-                }else{
-                  //grunt.log.ok(options.config['win'].title+'-'+options.config['win'].arch+'-Setup.exe');
-                }
+      grunt.log.ok(options.appPath);
+        fs.access( options.appPath , function (err) {
+          if (err) {
+            grunt.log.error(err);// return; 
+          }else{
+          if( options.platform!=='osx' || ( options.platform==='osx' && os.platform() === 'darwin') ){
+            builder.build( options , function (err) {
+              if (err) {
+                grunt.log.error(err); // return;
               }
-            );
-            done();
-          });
+              fs.rename(
+                path.resolve(options.out+'/'+options.config['win'].title+' Setup.exe'),
+                path.resolve(options.out+'/'+options.config['win'].title+'-'+options.config['win'].arch+'-Setup.exe')
+                ,function (err) { }
+              );
+              done();
+            });
+          }
         }
       })
     }
@@ -57,13 +51,13 @@ module.exports = function (grunt) {
       arch      :  'all', // ia32, am64, all
       basePath  :  './app', // base path para config
       config    :  './app/builder.json',
+      out       :  './dist',
       //config    :   grunt.file.readJSON('./test/app/builder.json'), 
       //appPath   :  './app',
-      buildPath   :  './build',
-      out       :  './instaler'
+      buildPath   :  './build'
     };
     var options = this.options(defaultOpt);
-
+    
     /*if(typeof this.data.options === 'function'){
       var options = this.data.options.apply(grunt, arguments);
       for (var key in defaultOpt) {
@@ -77,7 +71,7 @@ module.exports = function (grunt) {
     
     options.config = grunt.file.readJSON(options.config);
     let pck =grunt.file.readJSON(options.basePath+'/package.json');
-        
+    
     if(options.appPath === undefined){
       // para path  'darwin','win32','linux'
       // para config 'osx','win','linux'
@@ -92,24 +86,24 @@ module.exports = function (grunt) {
         var pathPlatform = {linux : 'linux'};
       }
       var configPlatform = (options.platform === 'all') ? ['osx','win','linux'] : [options.platform];
-      var pathArch = (options.arch === 'all') ? ['x64','ia32'] : [options.arch];
-      
-      for (var i = 0; i < configPlatform.length; i++) {
-        var pla = configPlatform[i];
-        
+
+var pla = options.platform;
+//      for (var i = 0; i < configPlatform.length; i++) {
+//        var pla = configPlatform[i];
         if(options.config[pla].title === undefined) { options.config[pla].title = pck.name;}
         if(options.config[pla].version === undefined) { options.config[pla].version = pck.version;}
         if(options.config[pla].executable === undefined) { options.config[pla].executable = pck.name;}
-       
-        for (var j = 0; j < pathArch.length; j++) {
-          var ar = pathArch[j];
-          options.appPath  = './'+pck.name+'-'+pathPlatform[pla]+'-'+ar;
-          options.platform = pla ;
-          options.config[pla].arch  = (ar ==='ia32') ? 32:64;
+        options.platform = pla ;
+//        if(options.arch === 'all'){
+//          ['ia32','x64'].forEach((arch, index, array) => {
+//            options.appPath  = './'+pck.name+'-'+pathPlatform[pla]+'-'+arch;
+//            _build(options);
+//          })
+//        }else{
+          options.appPath  = './'+pck.name+'-'+pathPlatform[pla]+'-'+options.arch;
           _build(options);
-        }// for
-      }// for
-      
+//        }
+//      }// for
     }else{
       _build(options);
     }

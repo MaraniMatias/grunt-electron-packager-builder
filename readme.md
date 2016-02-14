@@ -4,7 +4,7 @@ Grunt tasks for working with electron, can run, compile and generate installers 
 
 ## Install
 
-```
+```sh
 npm install grunt-electron-packager-builder --save-dev 
 ```
 
@@ -36,7 +36,7 @@ module.exports = (grunt) => {
           //arch      : 'all',    // default all
           //version   : '0.36.7', // default auto set
           //name    : 'Titule Electron app', // default (options.dir+'/packeger.json').name
-          icon      : './app/recursos/icon',
+          icon      : './app/recursos/icon', //according to auto detect platform extension.
           dir       : './app',   // default ./app
           out       : './build'  // default ./build
         }
@@ -46,7 +46,7 @@ module.exports = (grunt) => {
           return {
             platform,
             arch,
-            icon      : './app/recursos/icon'
+            icon      : './app/recursos/icon'  // according to auto detect platform extension
           }
         }
       }
@@ -55,58 +55,52 @@ module.exports = (grunt) => {
       options  :   {
         //platform  :  'all', // default all // win, osx, linux
         //arch      :  'all', // default all // ia32, am64, all
-        //appPath   :  './app', // default ./app auto set
-        //basePath  :  './app', // default ./app // Path base the file config.json 
+        //appPath   :  './app', // default ./app
+        //basePath  :  './app', // default ./app // Path base for the file config.json 
         config    :   './task-builder-config.json', // default ./app/builder.json
         buildPath   :  './build', // default ./build
         out       :  './build/instaler'  // default ./dist
       },
-      /*all  : {
-        options  :  {
-          platform  :  'all', 
-          arch  :  'all'      
-        }
-      },*/
+      // all  : { options:{ platform  :  'all', arch  :  'all' } }, // next version
       win32:{
         options: {
           platform: 'win',
-          arch : 'ia32',
-          appPath   :  './CNC-ino-win32-ia32' // path  buildPath/appPath
+          arch : 'ia32'
+          //appPath   :  './CNC-ino-win32-ia32' // path  buildPath/appPath
         }
       },
       win64:{
         options: {
           platform: 'win',
-          arch : 'x64',
-          appPath   :  './CNC-ino-win32-x64' // path  buildPath/appPath
+          arch : 'x64'
+          //appPath   :  './CNC-ino-win32-x64' // path  buildPath/appPath
         }
       },
-      win:{options: {platform : 'win'}},
-      /*osx:{ // Only with mac os machine.
-        options: {
-          platform: 'osx',
-          //appPath   :  './CNC-ino-darwin-x64',
-        }
-      },*/
-      linux:{options: { platform : 'linux'}},
       linux64:{
         options: {
           platform : 'linux',
-          arch : 'x64',
-          appPath  :  './CNC-ino-linux-ia32'
+          arch : 'x64'
+          //appPath  :  './CNC-ino-linux-ia32'
         }
       },
       linux32:{
         options: {
           platform : 'linux',
-          arch : 'ia32',
-          appPath  :  './CNC-ino-linux-x64'
+          arch : 'ia32'
+          //appPath  :  './CNC-ino-linux-x64'
+        }
+      },
+      osx:{ // Only with mac os machine.
+        options: {
+          platform: 'osx',
+          arch : 'x64'
+          //appPath   :  './CNC-ino-darwin-x64',
         }
       }
-    }// einstaller
+    } // einstaller
   });
   
-  grunt.loadNpmTasks('grunt-electron-debian-installer');
+  grunt.loadNpmTasks('grunt-electron-packager-builder');
   grunt.registerTask('default', ['eplus:run']);
 };
 ```
@@ -147,6 +141,47 @@ See the [electron-packager](https://github.com/maxogden/electron-packager).
 
 See the [electron-builder](https://github.com/loopline-systems/electron-builder).
 
-## License
+## Example
+tree -L 2 -a
+.
+├── app
+│   ├── app.js
+│   ├── bower.json
+│   ├── components
+│   ├── css
+│   ├── html
+│   ├── js
+│   ├── lib
+│   ├── node_modules
+│   ├── package.json
+│   └── recursos
+├── Gruntfile.js
+├── package.json
+├── README.md
+├── task-builder-config.json
+...
+```
+grunt ebuild:default
+```
+...
+├── build
+│   ├── CNC-ino-darwin-x64
+│   ├── CNC-ino-linux-ia32
+│   ├── CNC-ino-linux-x64
+│   ├── CNC-ino-win32-ia32
+│   ├── CNC-ino-win32-x64
+...
+```
+grunt einstaller
+```
+...
+├── build
+└── instaler
+    ├── CNC-ino-0.1.2-amd64.deb
+    ├── CNC-ino-0.1.2-i386.deb
+    ├── CNC-ino-32-Setup.exe
+    └── CNC-ino-64-Setup.exe
 
+
+## License
 MIT © [Marani Matias Ezequiel](maranimatias@gmail.com)
