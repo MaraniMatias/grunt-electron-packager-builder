@@ -35,8 +35,8 @@ module.exports = (grunt) => {
           //platform  : 'all',    // default all
           //arch      : 'all',    // default all
           //version   : '0.36.7', // default auto set
-          //name    : 'Titule Electron app', // default (options.dir+'/packeger.json').name
-          icon      : './app/recursos/icon', //according to auto detect platform extension.
+          //name    : 'Electron app', // default (options.dir+'/packeger.json').name
+          icon      : './app/recursos/icon', //Auto detect platform extension.
           dir       : './app',   // default ./app
           out       : './build'  // default ./build
         }
@@ -46,7 +46,7 @@ module.exports = (grunt) => {
           return {
             platform,
             arch,
-            icon      : './app/recursos/icon'  // according to auto detect platform extension
+            icon : './app/recursos/icon'// Auto detect platform extension
           }
         }
       }
@@ -134,7 +134,11 @@ module.exports = (grunt) => {
 }
 ```
 ## Options and Documentation
-
+```
+npm install  electron-prebuilt --save-dev
+npm install  electron-packager --save-dev
+npm install  electron-builder --save-dev
+```
 See the [electron-prebuilt](https://github.com/mafintosh/electron-prebuilt).
 
 See the [electron-packager](https://github.com/maxogden/electron-packager).
@@ -143,7 +147,7 @@ See the [electron-builder](https://github.com/loopline-systems/electron-builder)
 
 ## Example
 
-tree -L 2 -a
+### tree -L 2 -a
 ```
 .
 ├── app
@@ -164,7 +168,7 @@ tree -L 2 -a
 ...
 ```
 
-grunt ebuild:default
+### grunt ebuild:default
 ```
 ...
 ├── build
@@ -176,15 +180,15 @@ grunt ebuild:default
 ...
 ```
 
-grunt einstaller
+### grunt einstaller
 ```
 ...
 ├── build
-└── instaler
-    ├── CNC-ino-0.1.2-amd64.deb
-    ├── CNC-ino-0.1.2-i386.deb
-    ├── CNC-ino-32-Setup.exe
-    └── CNC-ino-64-Setup.exe
+│   └── instaler
+│       ├── CNC-ino-0.1.2-amd64.deb
+│       ├── CNC-ino-0.1.2-i386.deb
+│       ├── CNC-ino-32-Setup.exe
+│       └── CNC-ino-64-Setup.exe
 ```
 
 ## License
