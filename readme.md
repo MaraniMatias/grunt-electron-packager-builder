@@ -142,6 +142,7 @@ See the [electron-packager](https://github.com/maxogden/electron-packager).
 See the [electron-builder](https://github.com/loopline-systems/electron-builder).
 
 ## Example
+
 tree -L 2 -a
 ```
 .
@@ -162,7 +163,7 @@ tree -L 2 -a
 ├── task-builder-config.json
 ...
 ```
-```
+
 grunt ebuild:default
 ```
 ...
@@ -174,6 +175,7 @@ grunt ebuild:default
 │   ├── CNC-ino-win32-x64
 ...
 ```
+
 grunt einstaller
 ```
 ...
@@ -183,7 +185,7 @@ grunt einstaller
     ├── CNC-ino-0.1.2-i386.deb
     ├── CNC-ino-32-Setup.exe
     └── CNC-ino-64-Setup.exe
-
+```
 
 ## License
 MIT © [Marani Matias Ezequiel](maranimatias@gmail.com)
