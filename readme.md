@@ -143,6 +143,7 @@ See the [electron-builder](https://github.com/loopline-systems/electron-builder)
 
 ## Example
 tree -L 2 -a
+```
 .
 ├── app
 │   ├── app.js
@@ -160,6 +161,7 @@ tree -L 2 -a
 ├── README.md
 ├── task-builder-config.json
 ...
+```
 ```
 grunt ebuild:default
 ```
