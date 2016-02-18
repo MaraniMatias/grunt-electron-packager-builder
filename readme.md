@@ -7,108 +7,46 @@ Grunt tasks for working with electron, can run, compile and generate installers 
 npm install grunt-electron-packager-builder --save-dev 
 ```
 
-## Usage
+## Quick Setup for this task.
+  Gruntfile.js 
 ```js
 module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
-    eplus  :  {
-      run : { 
-        options : {
+    eplus:{
+      run:{ 
+        options:{
           appPath  :  './app' // default '.'
-        }
-      },
-      debug : { 
-        options : {
-          appPath  :  './app',  // default '.'
-          debug : true,  // default false
-          port  :  5858  // default 5858
         }
       }
     },
-    ebuild : { // electron-packager
+    ebuild : {
       default:{
-        options: {
-          //overwrite : true,     // default true
-          //platform  : 'all',    // default all
-          //arch      : 'all',    // default all
-          //version   : '0.36.7', // default auto set
-          //name    : 'Electron app', // default (options.dir+'/packeger.json').name
+        options:{
           icon      : './app/recursos/icon', //Auto detect platform extension.
           dir       : './app',   // default ./app
           out       : './build'  // default ./build
         }
-      },
-      custom:{
-        options: (platform,arch) => {
-          return {
-            platform,
-            arch,
-            icon : './app/recursos/icon'// Auto detect platform extension
-          }
-        }
       }
-    },// ebuild
-    einstaller  :  { // electron-bulider 
-      options  :   {
-        //platform  :  'all', // default all // win, osx, linux
-        //arch      :  'all', // default all // ia32, am64, all
-        //appPath   :  './app', // default ./app
-        //basePath  :  './app', // default ./app // Path base for the file config.json 
-        config    :   './app-builder.json', // default ./app/builder.json
-        buildPath   :  './build', // default ./build
-        out       :  './build/instaler'  // default ./dist
+    },
+    einstaller:{
+      options:{
+        config     :   './app-builder.json', // default ./app/builder.json
+        buildPath  :  './build', // default ./build
+        out        :  './build/instaler'  // default ./dist
       },
-      // all  : { options:{ platform  :  'all', arch  :  'all' } }, // next version
       winall:{
         options: {
-          platform: 'win',
-          arch : 'all'
+          platform  :  'win'
         }
       },
       linuxall:{
         options: {
-          platform: 'win',
-          arch : 'all'
-        }
-      },
-      win32:{
-        options: {
-          platform: 'win',
-          arch : 'ia32'
-          //appPath   :  './CNC-ino-win32-ia32' // path  buildPath/appPath
-        }
-      },
-      win64:{
-        options: {
-          platform: 'win',
-          arch : 'x64'
-          //appPath   :  './CNC-ino-win32-x64' // path  buildPath/appPath
-        }
-      },
-      linux64:{
-        options: {
-          platform : 'linux',
-          arch : 'x64'
-          //appPath  :  './CNC-ino-linux-ia32'
-        }
-      },
-      linux32:{
-        options: {
-          platform : 'linux',
-          arch : 'ia32'
-          //appPath  :  './CNC-ino-linux-x64'
-        }
-      },
-      osx:{ // Only with mac os machine. Untested by me.
-        options: {
-          platform: 'osx',
-          arch : 'x64'
-          //appPath   :  './CNC-ino-darwin-x64',
+          platform  :  'linux'
         }
       }
-    } // einstaller
+    }
   });
   
   grunt.loadNpmTasks('grunt-electron-packager-builder');
@@ -199,48 +137,108 @@ See the [electron-builder](https://github.com/loopline-systems/electron-builder)
 │       ├── CNC-ino-32-Setup.exe
 │       └── CNC-ino-64-Setup.exe
 ```
-
-### Gruntfile.js mini
-
-My gruntfile.js
+## Opciones
 ```js
 module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
-    eplus:{
-      run:{ 
-        options:{
+    eplus  :  {
+      run : { 
+        options : {
           appPath  :  './app' // default '.'
+        }
+      },
+      debug : { 
+        options : {
+          appPath  :  './app',  // default '.'
+          debug : true,  // default false
+          port  :  5858  // default 5858
         }
       }
     },
-    ebuild : {
+    ebuild : { // electron-packager
       default:{
-        options:{
+        options: {
+          //overwrite : true,     // default true
+          //platform  : 'all',    // default all
+          //arch      : 'all',    // default all
+          //version   : '0.36.7', // default auto set
+          //name    : 'Electron app', // default (options.dir+'/packeger.json').name
           icon      : './app/recursos/icon', //Auto detect platform extension.
           dir       : './app',   // default ./app
           out       : './build'  // default ./build
         }
-      }
-    },
-    einstaller:{
-      options:{
-        config     :   './app-builder.json', // default ./app/builder.json
-        buildPath  :  './build', // default ./build
-        out        :  './build/instaler'  // default ./dist
       },
+      custom:{
+        options: (platform,arch) => {
+          return {
+            platform,
+            arch,
+            icon : './app/recursos/icon'// Auto detect platform extension
+          }
+        }
+      }
+    },// ebuild
+    einstaller  :  { // electron-bulider 
+      options  :   {
+        //platform  :  'all', // default all // win, osx, linux
+        //arch      :  'all', // default all // ia32, am64, all
+        //appPath   :  './app', // default ./app
+        //basePath  :  './app', // default ./app // Path base for the file config.json 
+        config    :   './app-builder.json', // default ./app/builder.json
+        buildPath   :  './build', // default ./build
+        out       :  './build/instaler'  // default ./dist
+      },
+      // all  : { options:{ platform  :  'all', arch  :  'all' } }, // next version
       winall:{
         options: {
-          platform  :  'win'
+          platform: 'win',
+          arch : 'all'
         }
       },
       linuxall:{
         options: {
-          platform  :  'linux'
+          platform: 'linux',
+          arch : 'all'
+        }
+      },
+      win32:{
+        options: {
+          platform: 'win',
+          arch : 'ia32'
+          //appPath   :  './CNC-ino-win32-ia32' // path  buildPath/appPath
+        }
+      },
+      win64:{
+        options: {
+          platform: 'win',
+          arch : 'x64'
+          //appPath   :  './CNC-ino-win32-x64' // path  buildPath/appPath
+        }
+      },
+      linux64:{
+        options: {
+          platform : 'linux',
+          arch : 'x64'
+          //appPath  :  './CNC-ino-linux-ia32'
+        }
+      },
+      linux32:{
+        options: {
+          platform : 'linux',
+          arch : 'ia32'
+          //appPath  :  './CNC-ino-linux-x64'
+        }
+      },
+      osx:{ // Only with mac os machine. Untested by me.
+        options: {
+          platform: 'osx',
+          arch : 'x64'
+          //appPath   :  './CNC-ino-darwin-x64',
         }
       }
-    }
+    } // einstaller
   });
   
   grunt.loadNpmTasks('grunt-electron-packager-builder');
