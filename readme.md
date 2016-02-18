@@ -62,6 +62,18 @@ module.exports = (grunt) => {
         out       :  './build/instaler'  // default ./dist
       },
       // all  : { options:{ platform  :  'all', arch  :  'all' } }, // next version
+      winall:{
+        options: {
+          platform: 'win',
+          arch : 'all'
+        }
+      },
+      linuxall:{
+        options: {
+          platform: 'win',
+          arch : 'all'
+        }
+      },
       win32:{
         options: {
           platform: 'win',
@@ -90,7 +102,7 @@ module.exports = (grunt) => {
           //appPath  :  './CNC-ino-linux-x64'
         }
       },
-      osx:{ // Only with mac os machine.
+      osx:{ // Only with mac os machine. Untested by me.
         options: {
           platform: 'osx',
           arch : 'x64'
@@ -107,10 +119,6 @@ module.exports = (grunt) => {
 ### app-builder.json
 ```json
 {
-  "app": {
-    "name": "CNC-ino",
-    "version": "0.0.1"
-  },
   "osx": {
     "title": "CNC-ino",
     "icon": "./app/recursos/icon.icns",
@@ -189,6 +197,54 @@ See the [electron-builder](https://github.com/loopline-systems/electron-builder)
 │       ├── CNC-ino-0.1.2-i386.deb
 │       ├── CNC-ino-32-Setup.exe
 │       └── CNC-ino-64-Setup.exe
+```
+
+### Gruntfile.js mini
+```js
+module.exports = (grunt) => {
+  require('load-grunt-tasks')(grunt);
+
+  grunt.initConfig({
+    eplus:{
+      run:{ 
+        options:{
+          appPath  :  './app' // default '.'
+        }
+      }
+    },
+    ebuild : {
+      default:{
+        options:{
+          icon      : './app/recursos/icon', //Auto detect platform extension.
+          dir       : './app',   // default ./app
+          out       : './build'  // default ./build
+        }
+      }
+    },
+    einstaller:{
+      options:{
+        config     :   './app-builder.json', // default ./app/builder.json
+        buildPath  :  './build', // default ./build
+        out        :  './build/instaler'  // default ./dist
+      },
+      winall:{
+        options: {
+          platform  :  'win',
+          arch      :  'all'
+        }
+      },
+      linuxall:{
+        options: {
+          platform  :  'win',
+          arch      :  'all'
+        }
+      }
+    }
+  });
+  
+  grunt.loadNpmTasks('grunt-electron-packager-builder');
+  grunt.registerTask('default', ['eplus:run']);
+};
 ```
 
 ## License

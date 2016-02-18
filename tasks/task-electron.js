@@ -1,6 +1,6 @@
 /* global process */
 'use strict';
-const 
+var 
 fs = require('fs'),
 os = require('os'),
 path = require('path'),
@@ -14,38 +14,43 @@ module.exports = function (grunt) {
   
   grunt.registerMultiTask('einstaller', 'Create installers for Electron app.', function () {
 
+function eBuild(options){
+  return new Promise(function (resolve, reject){
+    options.appPath = path.normalize(options.buildPath +'/'+ options.appPath);
+    options.config['linux'].arch  = (options.arch ==='ia32') ? 32:64;
+    options.config['win'].arch  = (options.arch ==='ia32') ? 32:64;
+    options.config['osx'].arch  = (options.arch ==='ia32') ? 32:64;
+    
+    fs.access( options.appPath, fs.W_OK , function (err) {
+      if (err){
+        grunt.log.error(reject(err));
+      }
+      else {
+        if( options.platform!=='osx' || ( options.platform==='osx' && os.platform() === 'darwin') ){
+          builder.build( options , function (err) {
+            if (err){
+              grunt.log.error(reject(err));
+            }// grunt.log.error(err);
+            else{
+              fs.rename(
+                path.resolve(options.out+'/'+options.config['win'].title+' Setup.exe'),
+                path.resolve(options.out+'/'+options.config['win'].title+'win32-x'+options.config['win'].arch+'-Setup.exe')
+              , function (err) {} );
+              resolve();
+            }
+          });// builder
+        }           
+      }
+    });// fs
+    
+  });
+}
+// ###########################################################################
     var done = this.async();
     if (this.data.options === undefined) {
       throw new Error('`options` required');
     }
-    
-    function _build(options){
-      options.appPath = path.normalize(options.buildPath +'/'+ options.appPath);
-      options.config['linux'].arch  = (options.arch ==='ia32') ? 32:64;
-      options.config['win'].arch  = (options.arch ==='ia32') ? 32:64;
-      options.config['osx'].arch  = (options.arch ==='ia32') ? 32:64;
-      grunt.log.ok(options.appPath);
-        fs.access( options.appPath , function (err) {
-          if (err) {
-            grunt.log.error(err);// return; 
-          }else{
-          if( options.platform!=='osx' || ( options.platform==='osx' && os.platform() === 'darwin') ){
-            builder.build( options , function (err) {
-              if (err) {
-                grunt.log.error(err); // return;
-              }
-              fs.rename(
-                path.resolve(options.out+'/'+options.config['win'].title+' Setup.exe'),
-                path.resolve(options.out+'/'+options.config['win'].title+'-'+options.config['win'].arch+'-Setup.exe')
-                ,function (err) { }
-              );
-              done();
-            });
-          }
-        }
-      })
-    }
-    
+        
     var defaultOpt = {
       platform  :  'all', // win, osx, linux
       arch      :  'all', // ia32, am64, all
@@ -56,8 +61,8 @@ module.exports = function (grunt) {
       //appPath   :  './app',
       buildPath   :  './build'
     };
+   
     var options = this.options(defaultOpt);
-    
     /*if(typeof this.data.options === 'function'){
       var options = this.data.options.apply(grunt, arguments);
       for (var key in defaultOpt) {
@@ -70,7 +75,7 @@ module.exports = function (grunt) {
     }*/
     
     options.config = grunt.file.readJSON(options.config);
-    let pck =grunt.file.readJSON(options.basePath+'/package.json');
+    var pck =grunt.file.readJSON(options.basePath+'/package.json');
     
     if(options.appPath === undefined){
       // para path  'darwin','win32','linux'
@@ -85,27 +90,38 @@ module.exports = function (grunt) {
       }else if(options.platform === 'linux'){
         var pathPlatform = {linux : 'linux'};
       }
-      var configPlatform = (options.platform === 'all') ? ['osx','win','linux'] : [options.platform];
+//      var configPlatform = (options.platform === 'all') ? ['osx','win','linux'] : [options.platform];
 
-var pla = options.platform;
 //      for (var i = 0; i < configPlatform.length; i++) {
-//        var pla = configPlatform[i];
+var pla = options.platform;//or        var pla = configPlatform[i];
         if(options.config[pla].title === undefined) { options.config[pla].title = pck.name;}
         if(options.config[pla].version === undefined) { options.config[pla].version = pck.version;}
         if(options.config[pla].executable === undefined) { options.config[pla].executable = pck.name;}
-        options.platform = pla ;
-//        if(options.arch === 'all'){
-//          ['ia32','x64'].forEach((arch, index, array) => {
-//            options.appPath  = './'+pck.name+'-'+pathPlatform[pla]+'-'+arch;
-//            _build(options);
-//          })
-//        }else{
+//        options.platform = pla ;
+        if(options.arch === 'all'){
+          options.arch=['ia32','x64'][1];
           options.appPath  = './'+pck.name+'-'+pathPlatform[pla]+'-'+options.arch;
-          _build(options);
-//        }
-//      }// for
+          eBuild(options).then(function () {
+            grunt.log.ok(options.appPath);
+            if(options.platform!=='osx'){
+              options.arch=['ia32','x64'][0];
+              options.appPath  = './'+pck.name+'-'+pathPlatform[pla]+'-'+options.arch;
+              eBuild(options).then(function () {
+                grunt.log.ok(options.appPath);
+                done();
+              });
+            }
+          })
+        }else{
+          options.appPath  = './'+pck.name+'-'+pathPlatform[pla]+'-'+options.arch;
+          eBuild(options).then(function () {
+            grunt.log.ok(options.appPath);
+            done();
+          });
+        }// options.arch 
+        
     }else{
-      _build(options);
+      eBuild(options);
     }
 
   });
