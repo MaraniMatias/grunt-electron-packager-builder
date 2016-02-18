@@ -3,7 +3,6 @@
 Grunt tasks for working with electron, can run, compile and generate installers applications.
 
 ## Install
-
 ```sh
 npm install grunt-electron-packager-builder --save-dev 
 ```
@@ -142,15 +141,15 @@ module.exports = (grunt) => {
 }
 ```
 ## Options and Documentation
+Dependencies needed to run the tasks
+
 ```
 npm install  electron-prebuilt --save-dev
 npm install  electron-packager --save-dev
 npm install  electron-builder --save-dev
 ```
 See the [electron-prebuilt](https://github.com/mafintosh/electron-prebuilt).
-
 See the [electron-packager](https://github.com/maxogden/electron-packager).
-
 See the [electron-builder](https://github.com/loopline-systems/electron-builder).
 
 ## Example
