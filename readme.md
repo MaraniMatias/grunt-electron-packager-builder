@@ -92,52 +92,9 @@ See the [electron-packager](https://github.com/maxogden/electron-packager).
 
 See the [electron-builder](https://github.com/loopline-systems/electron-builder).
 
-## Example
 
-### tree -L 2 -a
-```
-.
-├── app
-│   ├── app.js
-│   ├── bower.json
-│   ├── components
-│   ├── css
-│   ├── html
-│   ├── js
-│   ├── lib
-│   ├── node_modules
-│   ├── package.json
-│   └── recursos
-├── Gruntfile.js
-├── package.json
-├── README.md
-├── app-builder.json
-...
-```
+Gruntfile.js
 
-### grunt ebuild:default
-```
-...
-├── build
-│   ├── CNC-ino-darwin-x64
-│   ├── CNC-ino-linux-ia32
-│   ├── CNC-ino-linux-x64
-│   ├── CNC-ino-win32-ia32
-│   ├── CNC-ino-win32-x64
-...
-```
-
-### grunt einstaller
-```
-...
-├── build
-│   └── instaler
-│       ├── CNC-ino-0.1.2-amd64.deb
-│       ├── CNC-ino-0.1.2-i386.deb
-│       ├── CNC-ino-32-Setup.exe
-│       └── CNC-ino-64-Setup.exe
-```
-## Opciones
 ```js
 module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt);
@@ -245,6 +202,53 @@ module.exports = (grunt) => {
   grunt.registerTask('default', ['eplus:run']);
 };
 ```
+
+### Example
+
+#### tree -L 2 -a
+```
+.
+├── app
+│   ├── app.js
+│   ├── bower.json
+│   ├── components
+│   ├── css
+│   ├── html
+│   ├── js
+│   ├── lib
+│   ├── node_modules
+│   ├── package.json
+│   └── recursos
+├── Gruntfile.js
+├── package.json
+├── README.md
+├── app-builder.json
+...
+```
+
+#### grunt ebuild:default
+```
+...
+├── build
+│   ├── CNC-ino-darwin-x64
+│   ├── CNC-ino-linux-ia32
+│   ├── CNC-ino-linux-x64
+│   ├── CNC-ino-win32-ia32
+│   ├── CNC-ino-win32-x64
+...
+```
+
+#### grunt einstaller
+```
+...
+├── build
+│   └── instaler
+│       ├── CNC-ino-0.1.2-amd64.deb
+│       ├── CNC-ino-0.1.2-i386.deb
+│       ├── CNC-ino-32-Setup.exe
+│       └── CNC-ino-64-Setup.exe
+```
+
 
 ## License
 MIT © [Marani Matias Ezequiel](maranimatias@gmail.com)
