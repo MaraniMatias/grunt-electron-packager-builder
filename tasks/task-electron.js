@@ -23,13 +23,13 @@ function eBuild(options){
     
     fs.access( options.appPath, fs.W_OK , function (err) {
       if (err){
-        grunt.log.error(reject(err));
+        grunt.log.error("We can not find: ",options.appPath);
       }
       else {
         if( options.platform!=='osx' || ( options.platform==='osx' && os.platform() === 'darwin') ){
           builder.build( options , function (err) {
             if (err){
-              grunt.log.error(reject(err));
+              grunt.log.error(err);
             }// grunt.log.error(err);
             else{
               fs.rename(
@@ -39,7 +39,9 @@ function eBuild(options){
               resolve();
             }
           });// builder
-        }           
+        }else{
+          grunt.log.error("We can not compete for darwin");
+        }
       }
     });// fs
     

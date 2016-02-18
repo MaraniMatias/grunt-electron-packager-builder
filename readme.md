@@ -200,6 +200,8 @@ See the [electron-builder](https://github.com/loopline-systems/electron-builder)
 ```
 
 ### Gruntfile.js mini
+
+My gruntfile.js
 ```js
 module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt);
@@ -229,14 +231,12 @@ module.exports = (grunt) => {
       },
       winall:{
         options: {
-          platform  :  'win',
-          arch      :  'all'
+          platform  :  'win'
         }
       },
       linuxall:{
         options: {
-          platform  :  'win',
-          arch      :  'all'
+          platform  :  'linux'
         }
       }
     }
