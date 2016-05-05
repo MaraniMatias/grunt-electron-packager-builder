@@ -1,26 +1,22 @@
 {
-  "name": "test",
+  "name": "app-test",
+  "desktopName": "app-test",
+  "productName": "app-test",
   "version": "0.0.1",
   "main": "main.js",
   "description": "Aplicacion de escritorio para test",
-  "private": true,
-  "license": "UNLICENSED",
+  "homepage":"",
   "scripts": {
-    "postinstall": "grunt help",
-    "start": "electron .",
-    "test": "mocha ./tests/test.js",
-    "clean": "rm -rf ./dist",
-    "clean:osx": "rm -rf ./dist/osx",
-    "clean:win": "rm -rf ./dist/win",
-    "pack": "",
-    "bulid": ""
+    "start": "cd .. &&  ./node_modules/electron-prebuilt/dist/electron ./app"
   },
   "author": "Marani Matias Ezequiel",
-  "email": "",
+  "email": "maranimatias@gmail.com",
   "engines": {
-    "node": "~5.3.0",
-    "npm": "~3.3.12"
+    "node": "~5.11.0",
+    "npm": "~3.8.6"
   },
+  "license": "MIT",
   "dependencies": {
+    "serialport": "^3.1.0"
   }
 }

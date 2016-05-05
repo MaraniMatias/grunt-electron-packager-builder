@@ -2,19 +2,6 @@
 module.exports = function (grunt)  {
 // nombre version y datos utiles
   grunt.initConfig({
-    jshint: {
-      all: ['Gruntfile.js', 'tasks/**/*.js'],
-      options: {
-        globals: {
-          console : true,
-          module  : true,
-          jQuery  : true,
-          window  : true
-        },
-        reporter: require('jshint-stylish'),
-        jshintrc: './.jshintrc'
-      }
-    }, 
     eplus  :  {
       run : { 
         options : {
@@ -33,7 +20,7 @@ module.exports = function (grunt)  {
     ebuild : { // electron-packager
       default:{
         options: {
-          version   : '0.36.7',
+          version   : '0.37.8',
           icon      : './test/app/recursos/icon',
           dir       : './test/app',
           out       : './test/build'
@@ -44,7 +31,7 @@ module.exports = function (grunt)  {
           return {
             platform,
             arch,
-            version   : '0.36.7',
+            version   : '0.37.8',
             icon      : './test/app/recursos/icon',
             dir       : './test/app',
             out       : './test/build'
@@ -80,7 +67,7 @@ module.exports = function (grunt)  {
       linux:{
         options: {
           platform : 'linux',
-          //appPath  :  './test/build/test-linux-x64'
+          appPath  :  './test/build/test-linux-ia32'
         }
       }
     }
@@ -89,7 +76,7 @@ module.exports = function (grunt)  {
 grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadTasks('tasks');
   grunt.registerTask('default', [
-    'grunt'
+    
   ]);
 };
 

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "diagnostics": true,
+    "inlineSources": false,
+    "inlineSourceMap": false,
+    "locale": "ES-es", 
+    "moduleResolution": "Node",    
+    "target": "ES6",
+    "module": "es6",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true
+  },
+  "exclude": [
+      "node_modules"
+  ]
+}
