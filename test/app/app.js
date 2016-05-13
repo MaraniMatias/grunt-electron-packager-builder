@@ -1,160 +1,89 @@
-const dirBase         =  `file://${__dirname}/html/`,
-      fs              =  require('fs'),
-      fileConfig      =  require('./package.json'),
-      CNC             =  require('./lib/main.js'),
-      electron        =  require('electron'),
-      app             =  electron.app,
-      BrowserWindow   =  electron.BrowserWindow,
-      ipcMain         =  electron.ipcMain,
-      dialog          =  electron.dialog,
-      Menu            =  electron.Menu,
-      Tray            =  electron.Tray,
-      powerSaveBlocker = electron.powerSaveBlocker,
-      globalShortcut  =  electron.globalShortcut
-;
-
-app.on('window-all-closed',  () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-var mainWindow  = null;
-var prefsWindow = null;
-
-// to not display the default menu to start
-var menu = Menu.buildFromTemplate( [] );
-Menu.setApplicationMenu(menu);
-
-app.on('ready',  () => {
-  //var appIcon = new Tray('./recursos/icon.png');
-  //appIcon.setToolTip('This is my application.');
-  //appIcon.setContextMenu(contextMenu);
-  
-  mainWindow = new BrowserWindow({
-    experimentalCanvasFeatures  :  true, // Default false
-    disableAutoHideCursor  :  false, // Default false
-    autoHideMenuBar  :  false, // Default false
-    backgroundColor  :  '#F5F5F5', // Default #FFF 
-    useContentSize   :  true,
-    skipTaskbar      :  false, // Default false
-    alwaysOnTop      :  false, // Default false
-    fullscreen       :  false, // Default false
-    frame            :  true, // Default true
-    type             :  'normal' , // Default normal . On Linux, desktop, dock, toolbar, splash, notification.  On OS X, desktop, textured
-    //webPreferences 
-    //icon       :  appIcon,
-    center     :  true,
-    minWidth   :  960, 
-    minHeight  :  600,
-    maxWidth   :  960, 
-    maxHeight  :  600,
-    title      :  fileConfig.name
-  });
-  mainWindow.loadURL(dirBase+'index.html');
-  //mainWindow.on('page-title-updated',  () => { console.log('title'); });
-  mainWindow.on('closed',  () => {
-    mainWindow = null;
-    if (process.platform != 'darwin') {
-      app.quit();
+"use strict";
+var dirBase = "file://" + __dirname + "/html/";
+var electron_1 = require('electron');
+var main_1 = require('./lib/main');
+var fileConfig = require('./package.json');
+electron_1.app.on('window-all-closed', function () {
+    if (process.platform !== 'darwin') {
+        electron_1.app.quit();
     }
-  });
-
-  // Open the devtools.
-  //mainWindow.openDevTools();
-  //mainWindow.setProgressBar(0.7);
-  
-  // ver como informar ala capa superior de que termino
-  mainWindow.on('blur',()=>{
-    globalShortcut.unregisterAll();
-  });
-  mainWindow.on('focus',()=>{
-    function globalShortcutSendComand (cmd){
-      CNC.sendCommand( cmd , (dataReceived) => { console.log(dataReceived); });
-    }
-    globalShortcut.register('q', () => { globalShortcutSendComand('0,0,5'); });
-    globalShortcut.register('e', () => { globalShortcutSendComand('0,0,-5'); });
-    globalShortcut.register('d', () => { globalShortcutSendComand('-5,0,0'); });
-    globalShortcut.register('a', () => { globalShortcutSendComand('5,0,0'); });
-    globalShortcut.register('w', () => { globalShortcutSendComand('0,-5,0'); });
-    globalShortcut.register('s', () => { globalShortcutSendComand('0,5,0'); });
-    globalShortcut.register('Space', () => { globalShortcutSendComand('0,0,0'); });
-    //globalShortcut.register('Up', () => { globalShortcutSendComand('0,10,0'); });
-    //globalShortcut.register('Down', () => { globalShortcutSendComand('0,-10,0'); });
-    //globalShortcut.register('Left', () => { globalShortcutSendComand('10,0,0'); });
-    //globalShortcut.register('Right', () => { globalShortcutSendComand('-10,0,0'); });
-  });
-});//ready
-
-ipcMain.on('arduino', (event, arg) => {
-  CNC.Arduino.reSet().then(function (obj) {
-    event.sender.send('arduino-res',obj);
-  }) 
 });
-
-ipcMain.on('open-file',(event,initialLine) => {
-  if(!initialLine){ initialLine = [0,0,0]; }
-  CNC.setFile(
-    dialog.showOpenDialog({
-      title : fileConfig.name,
-      filters: [{ name: 'G-Code', extensions: ['txt', 'gcode'] },{ name: 'All Files', extensions: ['*'] }],
-      properties: [ 'openFile' ] 
-    }), initialLine , (File) => {
-      event.sender.send('open-file-res', File);
-    }
-  )
+var mainWindow;
+var prefsWindow;
+var menu = electron_1.Menu.buildFromTemplate([]);
+electron_1.Menu.setApplicationMenu(menu);
+electron_1.app.on('ready', function () {
+    mainWindow = new electron_1.BrowserWindow({
+        disableAutoHideCursor: false,
+        autoHideMenuBar: false,
+        backgroundColor: '#F5F5F5',
+        useContentSize: true,
+        skipTaskbar: false,
+        alwaysOnTop: false,
+        fullscreen: false,
+        frame: true,
+        type: null,
+        center: true,
+        minWidth: 960,
+        minHeight: 600,
+        title: fileConfig.name
+    });
+    mainWindow.loadURL(dirBase + 'index.html');
+    mainWindow.on('closed', function () {
+        mainWindow = null;
+        if (process.platform != 'darwin') {
+            electron_1.app.quit();
+        }
+    });
+    mainWindow.setProgressBar(0.7);
+    mainWindow.on('blur', function () {
+        electron_1.globalShortcut.unregisterAll();
+    });
+    mainWindow.on('focus', function () {
+        function globalShortcutSendComand(cmd) {
+            console.log(cmd);
+        }
+        electron_1.globalShortcut.register('q', function () { globalShortcutSendComand('Q'); });
+        electron_1.globalShortcut.register('e', function () { globalShortcutSendComand('E'); });
+        electron_1.globalShortcut.register('d', function () { globalShortcutSendComand('D'); });
+        electron_1.globalShortcut.register('a', function () { globalShortcutSendComand('A'); });
+        electron_1.globalShortcut.register('w', function () { globalShortcutSendComand('W'); });
+        electron_1.globalShortcut.register('s', function () { globalShortcutSendComand('S'); });
+        electron_1.globalShortcut.register('Space', function () { globalShortcutSendComand('Space'); });
+    });
+    prefsWindow = new electron_1.BrowserWindow({
+        width: 400, height: 400,
+        resizable: false, show: false,
+        skipTaskbar: true, title: 'Preferencias.'
+    });
+    prefsWindow.loadURL(dirBase + 'prefe.html');
 });
-
-ipcMain.on('send-command', (event, arg) => {
-  CNC.sendCommand( arg , (dataReceived) => {
-    event.sender.send('close-conex',dataReceived);
-  });
+electron_1.ipcMain.on('arduino', function (event, arg) {
+    var ard = new main_1.Arduino();
+    event.sender.send('arduino-res', ard);
+    console.log(ard);
 });
-
-ipcMain.on('send-start', (event, arg) => {
-  //prevent-display-sleep
-  //prevent-app-suspension
-  var id = powerSaveBlocker.start('prevent-app-suspension');
-  console.log('prevent-app-suspension',powerSaveBlocker.isStarted(id));
-  CNC.start(arg, (data) => {
-    if( data.lineRunning !== false ){
-      // mainWindow.setProgressBar(0.7);
-      event.sender.send('add-line', { nro : data.lineRunning , line : CNC.File.gcode[data.lineRunning] });
-      console.log("I: %s - Ejes: %s - Result: %s", data.lineRunning, CNC.File.gcode[data.lineRunning].ejes , data.steps );  
-    }else{
-      powerSaveBlocker.stop(id);
-      event.sender.send('close-conex',{type: 'none', steps : data.steps});
-      console.log("Finish.");
-    }
-  });
+electron_1.ipcMain.on('open-file', function (event, initialLine) {
+    event.sender.send('open-file-res', electron_1.dialog.showOpenDialog({
+        title: fileConfig.name,
+        filters: [{ name: 'G-Code', extensions: ['txt', 'gcode'] }, { name: 'All Files', extensions: ['*'] }],
+        properties: ['openFile']
+    }));
 });
-
-ipcMain.on('about', (event, arg) => {
-  var chosen = dialog.showMessageBox( mainWindow, {
-    cancelId  :  0,
-    type     :  'info',
-    title    :  'Acerca De',
-    buttons  :  ['Aceptar'],
-    message  :  'CNC-ino, Arduino y NodeJS',
-    detail   :  'Proyecto de Router CNC casero con ideas, mano de obra y programacion propia dentro de lo posible.\n\tMarani Cesar Juan.\n\tMarani Matias Ezequiel.'
-  });
-  // if (chosen == 0)  mainWindow.destroy();
+electron_1.ipcMain.on('about', function (event, arg) {
+    var chosen = electron_1.dialog.showMessageBox(mainWindow, {
+        cancelId: 0,
+        type: 'info',
+        title: 'Acerca De',
+        buttons: ['Aceptar'],
+        message: 'app-test, Electron and NodeJS',
+        detail: 'pensado para probar un plugin de grunt and electron. \n\tMarani Matias Ezequiel.'
+    });
 });
-
-ipcMain.on('show-prefs', (event, arg) => {
-  fs.readFile( CNC.dirConfig , "utf8", function (error, data) {
-    event.sender.send('show-prefs-res',JSON.parse(data));
-  });
+electron_1.ipcMain.on('show-prefs', function (event, status) {
+    prefsWindow.show();
 });
-ipcMain.on('config-send', (event, arg) => {
-  CNC.saveConfig( arg , ( data ) => {
-      event.sender.send('config-res',data );
-  });
+electron_1.ipcMain.on('hide-prefs', function (event, status) {
+    prefsWindow.hide();
 });
-
-/*
-Event: ‘suspend’
-Event: ‘resume’
-Event: ‘on-ac’
-Event: ‘on-battery’
-*/
+//# sourceMappingURL=app.js.map

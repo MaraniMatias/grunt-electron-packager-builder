@@ -3,7 +3,7 @@
   "desktopName": "app-test",
   "productName": "app-test",
   "version": "0.0.1",
-  "main": "main.js",
+  "main": "app.js",
   "description": "Aplicacion de escritorio para test",
   "homepage":"",
   "scripts": {
@@ -17,6 +17,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "serialport": "^3.1.0"
+    "serialport": "^3.1.1"
   }
 }

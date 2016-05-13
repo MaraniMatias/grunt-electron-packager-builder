@@ -13,7 +13,7 @@ angular.factory('notify', [ () => {
       case 6: pos='bottom-right'; break;
       default: pos='top-center';
     }
-    UIkit.notify({ message , status , pos , timeout });
+    console.log({ message , status , pos , timeout });
   };
 }])
 /*

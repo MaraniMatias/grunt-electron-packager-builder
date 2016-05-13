@@ -2,7 +2,9 @@
 const electron     =  require('electron');
 const remote       =  electron.remote;
 const ipcRenderer  =  electron.ipcRenderer;
-const Menu         =  remote.require('menu');
+const Menu         =  remote.Menu;
+const MenuItem     =  remote.MenuItem;
+
 const mainMenu     =  require('./../lib/menuMain.js');
 const contextMenu  =  require('./../lib/menuContext.js');
 
@@ -15,8 +17,6 @@ window.addEventListener('contextmenu',  (e) => {
   cMenu.popup(remote.getCurrentWindow());
 }, false);
 
-/*
-//,ipcRenderer = electron.ipcRenderer
 var alertOnlineStatus = function() {
   window.alert(navigator.onLine ? 'online' : 'offline');
 };
@@ -29,4 +29,3 @@ var updateOnlineStatus = function() {
 window.addEventListener('online',  updateOnlineStatus);
 window.addEventListener('offline',  updateOnlineStatus);
 updateOnlineStatus();
-*/

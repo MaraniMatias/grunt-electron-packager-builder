@@ -70,14 +70,38 @@ module.exports = function (grunt)  {
           appPath  :  './test/build/test-linux-ia32'
         }
       }
+    },
+    jade: {      
+      compile: {
+        options: {
+          data: {
+            client: false,
+            pretty: true,
+            timestamp: "<%= grunt.template.today() %>",
+            debug: false
+          }
+        },
+        files: [ {
+          cwd: "./app/views",
+          src: "**/*.jade",
+          dest: "./app/html/",
+          expand: true,
+          ext: ".html"
+        } ]
+      }
+    },
+    ts: {
+      default : {
+        src: ["**/*.ts", "!node_modules/**/*.ts","!**/*.d.ts"]
+      }
     }
   });
   
-grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadTasks('tasks');
-  grunt.registerTask('default', [
-    
-  ]);
+  //grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-jade');
+  grunt.loadNpmTasks('grunt-ts');
+  //grunt.loadTasks('cargar la nueva');
+  grunt.registerTask('default', ['jade','ts']);
 };
 
 
