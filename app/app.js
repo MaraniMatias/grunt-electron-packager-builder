@@ -1,7 +1,7 @@
 "use strict";
 var dirBase = "file://" + __dirname + "/html/";
 var electron_1 = require('electron');
-var main_1 = require('./lib/main');
+var main_1 = require('./lib/main.js');
 var fileConfig = require('./package.json');
 electron_1.app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {

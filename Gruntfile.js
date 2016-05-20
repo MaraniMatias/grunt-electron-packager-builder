@@ -1,49 +1,43 @@
 'use strict';
 module.exports = function (grunt)  {
-// nombre version y datos utiles
+
   grunt.initConfig({
-    eplus  :  {
-      run : { 
+    eplus : {
+      run : {
         options : {
-          appPath  :  './app' // default '.'
+          appPath  :  './app' // default './app'
         }
       },
       debug : { 
         options : {
-          appPath  :  './app',  // default '.'
+          appPath  :  './app',  // default './app'
           debug : true,  // default false
           port  :  5858  // default 5858
         }
       }
     }, // eplus
-
-    ebuild : { // electron-packager
-      default:{
-        options: {
-          version   : '0.37.8',
-          icon      : './test/app/recursos/icon',
-          dir       : './test/app',
-          out       : './test/build'
+    epack : { // electron-packager
+      default : {
+        options : {
+          icon : './app/recursos/cnc-ino.ico',
+          out  : './build'
         }
-      },
+      }/*,
       custom:{
         options: (platform,arch) => {
           return {
             platform,
             arch,
-            version   : '0.37.8',
-            icon      : './test/app/recursos/icon',
-            dir       : './test/app',
-            out       : './test/build'
+            icon      : './app/recursos/icon',
+            out       : './build'
           }
         }
-      }
+      }*/
     },// ebuild
     einstaller  :  { // electron-bulider 
       options  :   {
-        basePath  :  './test/app', // Path base the file config.json
-        config    :   './test/app/builder.json', 
-        out       :  './test/instaler'
+        config    :   './app/package.json', 
+        out       :  './instaler'
       },
       all  : {
         options  :  {
@@ -53,9 +47,9 @@ module.exports = function (grunt)  {
       },
       win:{
         options: {
-          platform: 'win',
-          arch : 'all',
-          //appPath   :  './test/build/test-win32-ia32'
+          platform: 'win32',
+          arch : 'ia32',
+          appPath   :  './app'
         }
       },
       osx:{ // Only with mac os machine.
@@ -67,7 +61,7 @@ module.exports = function (grunt)  {
       linux:{
         options: {
           platform : 'linux',
-          appPath  :  './test/build/test-linux-ia32'
+          appPath  :  './build/app-test-linux-x64'
         }
       }
     },
@@ -97,10 +91,10 @@ module.exports = function (grunt)  {
     }
   });
   
-  //grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-ts');
-  //grunt.loadTasks('cargar la nueva');
+  //grunt.loadTasks('./../tasks');
+  grunt.loadTasks('./tasks');
   grunt.registerTask('default', ['jade','ts']);
 };
 

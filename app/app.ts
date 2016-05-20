@@ -1,10 +1,10 @@
 /// <reference path="../../typings/node/node.d.ts" />
 /// <reference path="../../typings/github-electron/github-electron.d.ts" />
-const dirBase         =  `file://${__dirname}/html/`;
+const dirBase   =  `file://${__dirname}/html/`;
 import * as fs from 'fs';
 import {app,BrowserWindow,ipcMain,dialog,Menu,Tray,powerSaveBlocker,globalShortcut} from 'electron';
 import {Arduino} from './lib/main';
-const  fileConfig =  require('./package.json');
+const  fileConfig  =  require('./package.json');
 
 app.on('window-all-closed',  () => {
   if (process.platform !== 'darwin') {
