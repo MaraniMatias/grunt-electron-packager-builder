@@ -1,0 +1,9 @@
+node_modules
+src 
+test
+npm-debug.log
+app
+old-tests
+build
+.vscode
+typings

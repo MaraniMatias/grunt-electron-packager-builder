@@ -19,8 +19,7 @@ module.exports = function (grunt)  {
     epack : { // electron-packager
       default : {
         options : {
-          icon : './app/recursos/cnc-ino.ico',
-          out  : './build'
+          icon : './app/recursos/cnc-ino'
         }
       }/*,
       custom:{
@@ -35,10 +34,6 @@ module.exports = function (grunt)  {
       }*/
     },// ebuild
     einstaller  :  { // electron-bulider 
-      options  :   {
-        config    :   './app/package.json', 
-        out       :  './instaler'
-      },
       all  : {
         options  :  {
           platform  :  'all',
@@ -47,22 +42,18 @@ module.exports = function (grunt)  {
       },
       win:{
         options: {
-          platform: 'win32',
-          arch : 'ia32',
-          appPath   :  './app'
+          platform: 'win32'
         }
       },
       osx:{ // Only with mac os machine.
         options: {
-          platform: 'osx',
-          //appPath   :  './test/build/test-darwin-x64',
+          platform: 'osx'
         }
       },
       linux:{
         options: {
-          platform : 'linux',
-          appPath  :  './build/app-test-linux-x64'
-        }
+          platform : 'linux'
+       }
       }
     },
     jade: {      
