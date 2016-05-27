@@ -4,7 +4,11 @@ Grunt tasks for working with electron, can run, compile and generate installers 
 
 ```
 ## I am working to improve this.
-This task has many errors but works with electron 1.2. *.
+This task has many errors but works with:
+    "electron-builder": "^3.25.*",
+    "electron-packager": "^7.0.*",
+    "electron-prebuilt": "^1.2.*",
+    "electron-rebuild": "^1.1.*",
 The task 'installer' (electron-builder) does not work well.
 ```
 
