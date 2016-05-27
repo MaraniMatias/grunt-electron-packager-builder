@@ -9,7 +9,7 @@ This task has many errors but works with:
     "electron-packager": "^7.0.*",
     "electron-prebuilt": "^1.2.*",
     "electron-rebuild": "^1.1.*",
-The task 'installer' (electron-builder) does not work well.
+The task 'enstaller' (electron-builder) does not work well.
 ```
 
 ## Install
